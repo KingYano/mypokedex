@@ -27,19 +27,19 @@
         props: {
             name: {
                 type: String,
-                required: true,
+                default: '',
             },
             id: {
                 type: Number,
-                required: true,
+                default: 0,
             },
             types: {
                 type: Array,
-                required: true,
+                default: () => [],
             },
             imageUrl: {
                 type: String,
-                required: true,
+                default: '',
             },
         },
         data () {

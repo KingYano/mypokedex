@@ -1,7 +1,6 @@
 <template lang="html">
 
     <div class="pokemon-list">
-        <h1>Liste des Pokemons</h1>
         <div class="pokemon-list-container">
             <PokemonCard v-for="pokemon in pokemons" :key="pokemon.name"
                 :name="pokemon.name"
