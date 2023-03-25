@@ -2,7 +2,8 @@
 
     <div class="search-bar">
         <v-text-field
-        class="search-bar-component"
+            max-width="200"
+            class="search-bar-component"
             :loading="loading"
             :bg-color="bgColor"
             :append-inner-icon="appendIcon"

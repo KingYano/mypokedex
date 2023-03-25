@@ -1,0 +1,55 @@
+// .main-container {
+//     background-image: url('@/assets/japanessbackground.jpg');
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     background-attachment: fixed;
+//     background-position: center center;
+
+//     .main-content {
+//         margin: auto;
+//         padding: 30px 25px;
+//         width: 1000px;
+//         background: rgba(154, 154, 154, 0.5);
+//         border-radius: 40px;
+//     }
+// }
+
+.main-container {
+    background-image: url('@/assets/japanessbackgroundmobile.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    padding: 40px 19px;
+
+    .main-content {
+        margin: auto;
+        padding: 30px 25px;
+        background: rgba(154, 154, 154, 0.5);
+        border-radius: 40px;
+
+        .separation {
+            border: 1px solid #FFFFFF;
+            margin-top: 20px;
+        }
+    }
+}
+
+// Media screen when the format is desktop
+@media only screen and (min-width: 391px) {
+    .main-container {
+        background-image: url('@/assets/japanessbackground.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center center;
+    }
+}
+
+@media only screen and (min-width: 1031px) {
+    .main-content {
+        margin: auto;
+        padding: 30px 25px;
+        width: 1000px;
+        background: rgba(154, 154, 154, 0.5);
+        border-radius: 40px;
+    }
+}

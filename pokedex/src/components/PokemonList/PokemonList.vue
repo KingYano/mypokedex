@@ -73,5 +73,5 @@ import PokemonCard from "@/components/PokemonCard/PokemonCard.vue";
 </script>
 
 <style lang="scss">
-
+    @import "../PokemonList/PokemonList.scss";
 </style>
