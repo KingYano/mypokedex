@@ -10,13 +10,15 @@ This project consists of creating a Pokedex using the PokeAPI to retrieve inform
 
 
 # Technologies Used:
-- Vue3 for the application logic
-- Sass for styling
-- The PokeAPI to retrieve information about Pokemon
-- Figma for design ("Coming soon")
+- Vue3 for the application logic.
+- Sass for styling.
+- The PokeAPI to retrieve information about Pokemon.
+- Figma for design.
 
-# Mockup
-Caution : The mockup images do not correspond to those from the API.
-![image](https://user-images.githubusercontent.com/79844764/227566740-ef1e0851-31ae-4bac-87eb-6cbb97510c99.png)
+# Mockup Desktop and Mobile : 
+
+![Desktop - Home Page](https://user-images.githubusercontent.com/79844764/227778318-9ef828fb-f3fb-4816-b94a-4c4c71503fc9.png)
+![Mobile - Home Page (1)](https://user-images.githubusercontent.com/79844764/227778345-950d2e11-8b16-4826-83a0-ace15cb06ae0.png)
+
 
 This project is open source and contributions are welcome!
