@@ -50,7 +50,7 @@ import PokemonCard from "@/components/PokemonCard/PokemonCard.vue";
         },
         mounted() {
             axios
-            .get("https://pokeapi.co/api/v2/pokemon?limit=20")
+            .get("https://pokeapi.co/api/v2/pokemon?limit=1200")
             .then((response) => {
                 this.pokemons = response.data.results.map((result, index) => {
                 const id = index + 1;
