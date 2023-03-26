@@ -2,7 +2,7 @@
 
     <div class="pokemon-card">
         <div class="pokemon-image">
-            <img :src="imageUrl" :alt="name" />
+            <img :src="imageUrl" :alt="'Picture of the Pokemon ' + capitaliseFirstLetterNamePokemon()"/>
         </div>
         <div class="pokemon-details">
             <div class="pokemon-description">
@@ -50,7 +50,9 @@
             }
         },
         methods: {
-
+            capitaliseFirstLetterNamePokemon() {
+                return this.name.charAt(0).toUpperCase() + this.name.slice(1)
+            }
         },
         computed: {
 

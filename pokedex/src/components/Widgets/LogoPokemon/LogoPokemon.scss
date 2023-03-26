@@ -1,0 +1,15 @@
+.logo-pokemon {
+    border-radius: 40px;
+    padding: 1px;
+    height: 60px;
+    width: 60px;
+    border: 1px solid #9A9A9A;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+
+    img {
+        height: 55px;
+        padding: 5px;
+    }
+}
