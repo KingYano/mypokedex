@@ -9,6 +9,13 @@
                 :imageUrl="pokemon.imageUrl"
             />
         </div>
+        <div class="pokemon-pagination-container">
+            <Pagination
+                color="white"
+                rounded="circle"
+                length=""
+            ></Pagination>
+        </div>
     </div>
 
 </template>
@@ -16,11 +23,13 @@
 <script lang="js">
 import axios from 'axios';
 import PokemonCard from "@/components/PokemonCard/PokemonCard.vue";
+import Pagination from "@/components/Widgets/Pagination/Pagination.vue";
 
     export default  {
         name: 'pokemon-list',
         components: {
             PokemonCard,
+            Pagination
         },
         props: {
 
@@ -28,20 +37,30 @@ import PokemonCard from "@/components/PokemonCard/PokemonCard.vue";
         data () {
             return {
                 pokemons: [],
+                length: '',
             }
         },
         methods: {
+            // Retrieve the types of pokemons
             getPokemonTypes() {
-                this.pokemons.forEach((pokemon) => {
+                axios
+                .get("https://pokeapi.co/api/v2/type")
+                .then((response) => {
+                    const types = response.data.results.map((result) => result.name);
+                    this.pokemons.forEach((pokemon) => {
                     axios
-                    .get(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`)
-                    .then((response) => {
-                        const types = response.data.types.map((type) => type.type.name);
-                        pokemon.types = types;
-                    })
-                    .catch((error) => {
+                        .get(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`)
+                        .then((response) => {
+                        const pokemonTypes = response.data.types.map((type) => type.type.name);
+                        pokemon.types = pokemonTypes.filter((type) => types.includes(type));
+                        })
+                        .catch((error) => {
                         console.log(error);
+                        });
                     });
+                })
+                .catch((error) => {
+                    console.log(error);
                 });
             },
         },
@@ -50,7 +69,7 @@ import PokemonCard from "@/components/PokemonCard/PokemonCard.vue";
         },
         mounted() {
             axios
-            .get("https://pokeapi.co/api/v2/pokemon?limit=50")
+            .get("https://pokeapi.co/api/v2/pokemon?limit=0")
             .then((response) => {
                 this.pokemons = response.data.results.map((result, index) => {
                 const id = index + 1;

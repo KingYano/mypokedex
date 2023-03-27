@@ -1,8 +1,7 @@
 <template lang="html">
 
-    <div class="search-bar">
+    <div class="widget-search-bar">
         <v-text-field
-            max-width="200"
             class="search-bar-component"
             :loading="loading"
             :bg-color="bgColor"
@@ -21,7 +20,7 @@
 <script lang="js">
 
     export default  {
-        name: 'search-bar',
+        name: 'widget-search-bar',
         components: {
 
         },
@@ -57,5 +56,5 @@
 </script>
 
 <style lang="scss">
-
+    @import "../SearchBar/SearchBar.scss";
 </style>

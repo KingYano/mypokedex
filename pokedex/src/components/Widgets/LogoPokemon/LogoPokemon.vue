@@ -1,6 +1,6 @@
 <template lang="html">
 
-    <div class="logo-pokemon">
+    <div class="widget-logo">
         <img :src="require('@/assets/pikachulogo.png')" alt="Logo Pikachu Pokedex" />
     </div>
 
@@ -9,7 +9,7 @@
 <script lang="js">
 
     export default  {
-        name: 'logo-pokemon',
+        name: 'widget-logo',
         components: {
 
         },

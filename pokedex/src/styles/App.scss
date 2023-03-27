@@ -1,4 +1,29 @@
+html {
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+    ::-webkit-scrollbar {
+        width: 12px;
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+    ::-webkit-scrollbar-thumb{
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background: rgba(154, 154, 154, 0.5);
+    }
+}
+
 .container {
+    height: 100%;
+    width: 100vw;
     padding: 40px 19px;
     background-image: url('@/assets/japanessbackgroundmobile.png'), url('@/assets/backgroundgradient.jpg');
     background-attachment: fixed;
@@ -40,11 +65,11 @@
             align-items: center;
             justify-content: space-between;
 
-            .logo-pokemon {
+            .widget-logo {
                 display: block !important;
             }
 
-            .search-bar {
+            .widget-search-bar {
                 width: 90%;
             }
         }
