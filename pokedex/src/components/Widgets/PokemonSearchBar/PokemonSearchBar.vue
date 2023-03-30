@@ -56,5 +56,5 @@
 </script>
 
 <style lang="scss">
-    @import "../SearchBar/SearchBar.scss";
+    @import "../PokemonSearchBar/PokemonSearchBar.scss";
 </style>

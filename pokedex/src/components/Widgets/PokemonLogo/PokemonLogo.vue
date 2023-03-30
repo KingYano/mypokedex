@@ -30,5 +30,5 @@
 </script>
 
 <style lang="scss">
-    @import "../LogoPokemon/LogoPokemon.scss";
+    @import "../PokemonLogo/PokemonLogo.scss";
 </style>

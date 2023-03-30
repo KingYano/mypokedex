@@ -2,20 +2,18 @@
 
     <div class="pokemon-list">
         <div class="pokemon-list-container">
-            <PokemonCard v-for="pokemon in pokemons" :key="pokemon.name"
+            <PokemonCard
+                v-for="pokemon in pokemons"        :key="pokemon.name"
                 :name="pokemon.name"
                 :id="pokemon.id"
                 :types="pokemon.types"
                 :imageUrl="pokemon.imageUrl"
             />
         </div>
-        <div class="pokemon-pagination-container">
-            <Pagination
-                color="white"
-                rounded="circle"
-                length=""
-            ></Pagination>
-        </div>
+        <PokemonButton
+            @click="loadMorePokemons"
+            texte="Charger 30 Pokémons supplémentaire"
+        />
     </div>
 
 </template>
@@ -23,13 +21,13 @@
 <script lang="js">
 import axios from 'axios';
 import PokemonCard from "@/components/PokemonCard/PokemonCard.vue";
-import Pagination from "@/components/Widgets/Pagination/Pagination.vue";
+import PokemonButton from "@/components/Widgets/PokemonButton/PokemonButton.vue";
 
     export default  {
         name: 'pokemon-list',
         components: {
             PokemonCard,
-            Pagination
+            PokemonButton
         },
         props: {
 
@@ -37,7 +35,8 @@ import Pagination from "@/components/Widgets/Pagination/Pagination.vue";
         data () {
             return {
                 pokemons: [],
-                length: '',
+                limit: 30,
+                offset: 0,
             }
         },
         methods: {
@@ -63,30 +62,38 @@ import Pagination from "@/components/Widgets/Pagination/Pagination.vue";
                     console.log(error);
                 });
             },
+            loadMorePokemons() {
+                this.offset += this.limit;
+                this.loadPokemons();
+            },
+            loadPokemons() {
+                axios
+                .get(`https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=${this.offset}`)
+                .then((response) => {
+                    const newPokemons = response.data.results.map((result, index) => {
+                        const id = this.offset + index + 1;
+                        const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+                        return {
+                            name: result.name,
+                            id,
+                            imageUrl,
+                            types: [],
+                        };
+                    });
+                    this.pokemons = [...this.pokemons, ...newPokemons];
+                    this.getPokemonTypes();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
         },
         computed: {
 
         },
         mounted() {
-            axios
-            .get("https://pokeapi.co/api/v2/pokemon?limit=0")
-            .then((response) => {
-                this.pokemons = response.data.results.map((result, index) => {
-                const id = index + 1;
-                const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-
-                return {
-                    name: result.name,
-                    id,
-                    imageUrl,
-                    types: [],
-                };
-                });
-                this.getPokemonTypes();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            this.loadPokemons();
         },
     }
 </script>

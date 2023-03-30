@@ -4,8 +4,8 @@
       <div class="container">
         <div class="main-content">
           <div class="header-container">
-            <LogoPokemon />
-            <SearchBar
+            <PokemonLogo />
+            <PokemonSearchBar
               placeholder="Searh pokemon by name or number"
               bgColor="white"
               appendIcon="mdi-magnify"
@@ -23,15 +23,15 @@
 </template>
 
 <script lang="js">
-import LogoPokemon from "@/components/Widgets/LogoPokemon/LogoPokemon.vue";
-import SearchBar from "@/components/Widgets/SearchBar/SearchBar.vue";
+import PokemonLogo from "@/components/Widgets/PokemonLogo/PokemonLogo.vue";
+import PokemonSearchBar from "@/components/Widgets/PokemonSearchBar/PokemonSearchBar.vue";
 import PokemonList from './components/PokemonList/PokemonList.vue'
 
     export default  {
         name: 'app',
         components: {
-          LogoPokemon,
-          SearchBar,
+          PokemonLogo,
+          PokemonSearchBar,
           PokemonList
         },
         props: {
