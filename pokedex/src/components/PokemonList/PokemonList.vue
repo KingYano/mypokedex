@@ -3,17 +3,22 @@
     <div class="pokemon-list">
         <div class="pokemon-list-container">
             <PokemonCard
-                v-for="pokemon in pokemons"        :key="pokemon.name"
+                v-for="pokemon in pokemons"
+                :key="pokemon.name"
                 :name="pokemon.name"
                 :id="pokemon.id"
                 :types="pokemon.types"
                 :imageUrl="pokemon.imageUrl"
             />
         </div>
-        <PokemonButton
-            @click="loadMorePokemons"
-            texte="Charger 30 Pokémons supplémentaire"
-        />
+        <div class="pokemon-button">
+            <PokemonButton
+                :disabled="this.offsetPokemon + this.limit >= maxPokemons ? isDisabledButton = true : isDisabledButton = false "
+                :loading="isLoadingStateButton"
+                @click="loadMorePokemons"
+                texte="Charger 21 Pokémons supplémentaire"
+            />
+        </div>
     </div>
 
 </template>
@@ -32,61 +37,56 @@ import PokemonButton from "@/components/Widgets/PokemonButton/PokemonButton.vue"
         props: {
 
         },
-        data () {
+        data() {
             return {
                 pokemons: [],
-                limit: 30,
-                offset: 0,
-            }
+                limit: 21,
+                offsetPokemon: 0,
+                isLoadingStateButton: false,
+                isDisabledButton: false,
+                maxPokemons: 1008,
+            };
         },
         methods: {
             // Retrieve the types of pokemons
-            getPokemonTypes() {
-                axios
-                .get("https://pokeapi.co/api/v2/type")
-                .then((response) => {
-                    const types = response.data.results.map((result) => result.name);
-                    this.pokemons.forEach((pokemon) => {
-                    axios
-                        .get(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`)
-                        .then((response) => {
-                        const pokemonTypes = response.data.types.map((type) => type.type.name);
-                        pokemon.types = pokemonTypes.filter((type) => types.includes(type));
-                        })
-                        .catch((error) => {
-                        console.log(error);
-                        });
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            addPokemonTypes(pokemonData) {
+                const pokemonTypes = pokemonData.types.map((type) => type.type.name);
+                return pokemonTypes;
             },
             loadMorePokemons() {
-                this.offset += this.limit;
+                this.isLoadingStateButton = true;
+                this.offsetPokemon += this.limit;
                 this.loadPokemons();
+                console.log( this.offsetPokemon + this.limit)
             },
             loadPokemons() {
                 axios
-                .get(`https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=${this.offset}`)
-                .then((response) => {
-                    const newPokemons = response.data.results.map((result, index) => {
-                        const id = this.offset + index + 1;
-                        const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+                    .get(`https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=${this.offsetPokemon}`)
+                    .then(async (response) => {
+                        const newPokemonsPromises = response.data.results.map(async (result, index) => {
+                            const id = this.offsetPokemon + index + 1;
+                            // Récupère les images des pokemons
+                            const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
-                        return {
-                            name: result.name,
-                            id,
-                            imageUrl,
-                            types: [],
-                        };
+                            // Récupère les type des pokemons
+                            const pokemonDataResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+                            const types = this.addPokemonTypes(pokemonDataResponse.data);
+
+                            return {
+                                name: result.name,
+                                id,
+                                imageUrl,
+                                types,
+                            };
+                        });
+
+                        const newPokemons = await Promise.all(newPokemonsPromises);
+                        this.pokemons = [...this.pokemons, ...newPokemons];
+                        this.isLoadingStateButton = false;
+                    })
+                    .catch((error) => {
+                        console.log(error);
                     });
-                    this.pokemons = [...this.pokemons, ...newPokemons];
-                    this.getPokemonTypes();
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
             },
         },
         computed: {
@@ -95,7 +95,7 @@ import PokemonButton from "@/components/Widgets/PokemonButton/PokemonButton.vue"
         mounted() {
             this.loadPokemons();
         },
-    }
+}
 </script>
 
 <style lang="scss">

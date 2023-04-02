@@ -7,6 +7,20 @@
         flex-direction: column;
         align-items: center;
     }
+
+    .pokemon-button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .button-componenent {
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.7) !important;
+            color: black !important;
+            font-weight: 700;
+        }
+    }
+
 }
 
 // Media screen when the format is desktop

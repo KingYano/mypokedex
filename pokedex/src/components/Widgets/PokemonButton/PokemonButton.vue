@@ -1,17 +1,14 @@
 <template lang="html">
 
-    <div class="widget-button">
-        <v-btn
-            class="button-componenent"
-            :active="active"
-            :color="color"
-            :loading="loading"
-            :size="size"
-            block
-        >
-            {{texte}}
-        </v-btn>
-    </div>
+    <v-btn
+        class="button-componenent"
+        :disabled="disabled"
+        :color="color"
+        :loading="loading"
+        :size="size"
+    >
+        {{texte}}
+    </v-btn>
 
 </template>
 
@@ -23,9 +20,9 @@
 
         },
         props: {
-            active: {
+            disabled: {
                 type: Boolean,
-                default: false,
+                default: true,
             },
             color: {
                 type: String,
