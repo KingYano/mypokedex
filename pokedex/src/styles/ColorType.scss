@@ -20,59 +20,78 @@ $color-fairy: #e09ae3;
 @mixin pokemon-type-color($type) {
     @if $type == "normal" {
       background-color: $color-normal;
+      box-shadow: 0 0 10px $color-normal;
     }
     @else if $type == "fighting" {
       background-color: $color-fighting;
+      box-shadow: 0 0 10px $color-fighting;
     }
     @else if $type == "flying" {
       background-color: $color-flying;
+      box-shadow: 0 0 10px $color-flying;
     }
     @else if $type == "poison" {
       background-color: $color-poison;
+      box-shadow: 0 0 10px $color-poison;
     }
     @else if $type == "ground" {
       background-color: $color-ground;
+      box-shadow: 0 0 10px $color-ground;
     }
     @else if $type == "rock" {
       background-color: $color-rock;
+      box-shadow: 0 0 10px $color-rock;
     }
     @else if $type == "bug" {
       background-color: $color-bug;
+      box-shadow: 0 0 10px $color-bug;
     }
     @else if $type == "ghost" {
       background-color: $color-ghost;
+      box-shadow: 0 0 10px $color-ghost;
     }
     @else if $type == "steel" {
       background-color: $color-steel;
+      box-shadow: 0 0 10px $color-steel;
     }
     @else if $type == "fire" {
       background-color: $color-fire;
+      box-shadow: 0 0 10px $color-fire;
     }
     @else if $type == "water" {
       background-color: $color-water;
+      box-shadow: 0 0 10px $color-water;
     }
     @else if $type == "grass" {
       background-color: $color-grass;
+      box-shadow: 0 0 10px $color-grass;
     }
     @else if $type == "electric" {
       background-color: $color-electric;
+      box-shadow: 0 0 10px $color-electric;
     }
     @else if $type == "psychic" {
       background-color: $color-psychic;
+      box-shadow: 0 0 10px $color-psychic;
     }
     @else if $type == "ice" {
       background-color: $color-ice;
+      box-shadow: 0 0 10px $color-ice;
     }
     @else if $type == "dragon" {
       background-color: $color-dragon;
+      box-shadow: 0 0 10px $color-dragon;
     }
     @else if $type == "dark" {
       background-color: $color-dark;
+      box-shadow: 0 0 10px $color-dark;
     }
     @else if $type == "fairy" {
       background-color: $color-fairy;
+      box-shadow: 0 0 10px $color-fairy;
     }
     @else {
       background-color: $color-normal;
+      box-shadow: 0 0 10px $color-normal;
     }
   }
