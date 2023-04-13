@@ -12,7 +12,7 @@
             />
         </div>
         <div class="pokemon-button">
-            <PokemonButton
+            <PokemonButtonText
                 :disabled="this.offsetPokemon + this.limit >= maxPokemons ? isDisabledButton = true : isDisabledButton = false "
                 :loading="isLoadingStateButton"
                 @click="loadMorePokemons"
@@ -26,13 +26,13 @@
 <script lang="js">
 import axios from 'axios';
 import PokemonCard from "@/components/PokemonCard/PokemonCard.vue";
-import PokemonButton from "@/components/Widgets/PokemonButton/PokemonButton.vue";
+import PokemonButtonText from "@/components/Widgets/PokemonButtonText/PokemonButtonText.vue";
 
     export default  {
         name: 'pokemon-list',
         components: {
             PokemonCard,
-            PokemonButton
+            PokemonButtonText
         },
         props: {
 

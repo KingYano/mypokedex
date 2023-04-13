@@ -1,7 +1,7 @@
 <template lang="html">
 
     <v-btn
-        class="button-componenent"
+        class="button-componenent-text"
         :disabled="disabled"
         :color="color"
         :loading="loading"
@@ -15,7 +15,7 @@
 <script lang="js">
 
     export default  {
-        name: 'widget-button',
+        name: 'widget-button-text',
         components: {
 
         },
@@ -29,10 +29,6 @@
                 default: 'info',
             },
             loading: {
-                type: Boolean,
-                default: false,
-            },
-            rounded: {
                 type: Boolean,
                 default: false,
             },
@@ -60,6 +56,5 @@
 </script>
 
 <style lang="scss">
-    @import "../PokemonButton/PokemonButton.scss";
-
+    @import "../PokemonButtonText/PokemonButtonText.scss";
 </style>
