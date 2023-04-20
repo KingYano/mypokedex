@@ -9,6 +9,7 @@
                 :id="pokemon.id"
                 :types="pokemon.types"
                 :imageUrl="pokemon.imageUrl"
+                @click="$emit('show-pokemon-info-card', pokemon)"
             />
         </div>
         <div class="pokemon-button">
@@ -61,32 +62,32 @@ import PokemonButtonText from "@/components/Widgets/PokemonButtonText/PokemonBut
             },
             loadPokemons() {
                 axios
-                    .get(`https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=${this.offsetPokemon}`)
-                    .then(async (response) => {
-                        const newPokemonsPromises = response.data.results.map(async (result, index) => {
-                            const id = this.offsetPokemon + index + 1;
-                            // Récupère les images des pokemons
-                            const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+                .get(`https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=${this.offsetPokemon}`)
+                .then(async (response) => {
+                    const newPokemonsPromises = response.data.results.map(async (result, index) => {
+                        const id = this.offsetPokemon + index + 1;
+                        // Récupère les images des pokemons
+                        const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
-                            // Récupère les type des pokemons
-                            const pokemonDataResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-                            const types = this.addPokemonTypes(pokemonDataResponse.data);
+                        // Récupère les type des pokemons
+                        const pokemonDataResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+                        const types = this.addPokemonTypes(pokemonDataResponse.data);
 
-                            return {
-                                name: result.name,
-                                id,
-                                imageUrl,
-                                types,
-                            };
-                        });
-
-                        const newPokemons = await Promise.all(newPokemonsPromises);
-                        this.pokemons = [...this.pokemons, ...newPokemons];
-                        this.isLoadingStateButton = false;
-                    })
-                    .catch((error) => {
-                        console.log(error);
+                        return {
+                            name: result.name,
+                            id,
+                            imageUrl,
+                            types,
+                        };
                     });
+
+                    const newPokemons = await Promise.all(newPokemonsPromises);
+                    this.pokemons = [...this.pokemons, ...newPokemons];
+                    this.isLoadingStateButton = false;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             },
         },
         computed: {

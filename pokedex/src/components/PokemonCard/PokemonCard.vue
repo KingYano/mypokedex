@@ -1,6 +1,6 @@
 <template lang="html">
 
-    <div class="pokemon-card">
+    <a href="#" class="pokemon-card">
         <div class="pokemon-image">
             <img :src="imageUrl" :alt="'Picture of the Pokemon ' + capitaliseFirstLetterNamePokemon()"/>
         </div>
@@ -15,7 +15,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </a>
 
 </template>
 

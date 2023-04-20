@@ -6,6 +6,8 @@
     border-radius: 40px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     background: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    color: inherit;
 
     .pokemon-image {
         img {
@@ -38,6 +40,7 @@
                 text-align: center;
                 border-radius: 40px;
                 text-transform: capitalize;
+                font-weight: 500;
 
                 &-normal {
                     @include pokemon-type-color('normal');
