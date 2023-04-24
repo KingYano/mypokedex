@@ -2,15 +2,21 @@
 
     <div class="pokemon-list">
         <div class="pokemon-list-container">
-            <PokemonCard
+            <router-link
                 v-for="pokemon in pokemons"
                 :key="pokemon.name"
-                :name="pokemon.name"
-                :id="pokemon.id"
-                :types="pokemon.types"
-                :imageUrl="pokemon.imageUrl"
-                @click="$emit('show-pokemon-info-card', pokemon)"
-            />
+                :to="{ name: 'PokemonInfoCard', params: { id: pokemon.id } }"
+            >
+                <PokemonCard
+                    v-for="pokemon in pokemons"
+                    :key="pokemon.name"
+                    :name="pokemon.name"
+                    :id="pokemon.id"
+                    :types="pokemon.types"
+                    :imageUrl="pokemon.imageUrl"
+                    @click="$emit('show-pokemon-info-card', pokemon)"
+                />
+            </router-link>
         </div>
         <div class="pokemon-button">
             <PokemonButtonText
