@@ -3,13 +3,12 @@
     <div class="pokemon-list">
         <div class="pokemon-list-container">
             <router-link
+                class="pokemon-card"
                 v-for="pokemon in pokemons"
                 :key="pokemon.name"
                 :to="{ name: 'PokemonInfoCard', params: { id: pokemon.id } }"
             >
                 <PokemonCard
-                    v-for="pokemon in pokemons"
-                    :key="pokemon.name"
                     :name="pokemon.name"
                     :id="pokemon.id"
                     :types="pokemon.types"

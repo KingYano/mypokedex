@@ -20,6 +20,7 @@
 
     .pokemon-details {
         .pokemon-description {
+            text-decoration: none;
             padding: 0 15px;
             display: flex;
             align-items: center;
@@ -31,6 +32,7 @@
         }
 
         .pokemon-types {
+            color: $color-text-types;
             padding: 10px 30px;
             display: flex;
             align-items: center;
@@ -41,78 +43,12 @@
                 text-align: center;
                 border-radius: 40px;
                 text-transform: capitalize;
-                font-weight: 500;
+                font-weight: 450;
 
-                &-normal {
-                    @include pokemon-type-color('normal');
-                }
-
-                &-fighting {
-                    @include pokemon-type-color('fighting');
-                }
-
-                &-flying {
-                    @include pokemon-type-color('flying');
-                }
-
-                &-poison {
-                    @include pokemon-type-color('poison');
-                }
-
-                &-ground {
-                    @include pokemon-type-color('ground');
-                }
-
-                &-rock {
-                    @include pokemon-type-color('rock');
-                }
-
-                &-bug {
-                    @include pokemon-type-color('bug');
-                }
-
-                &-ghost {
-                    @include pokemon-type-color('ghost');
-                }
-
-                &-steel {
-                    @include pokemon-type-color('steel');
-                }
-
-                &-fire {
-                    @include pokemon-type-color('fire');
-                }
-
-                &-water {
-                    @include pokemon-type-color('water');
-                }
-
-                &-grass {
-                    @include pokemon-type-color('grass');
-                }
-
-                &-electric {
-                    @include pokemon-type-color('electric');
-                }
-
-                &-psychic {
-                    @include pokemon-type-color('psychic');
-                }
-
-                &-ice {
-                    @include pokemon-type-color('ice');
-                }
-
-                &-dragon {
-                    @include pokemon-type-color('dragon');
-                }
-
-                &-dark {
-                    @include pokemon-type-color('dark');
-                }
-
-                &-fairy {
-                    @include pokemon-type-color('fairy');
+                @each $type in ('normal', 'fighting', 'flying', 'poison', 'ground', 'rock', 'bug', 'ghost', 'steel', 'fire', 'water', 'grass', 'electric', 'psychic', 'ice', 'dragon', 'dark', 'fairy') {
+                    &-#{$type} {
+                      @include pokemon-type-color($type);
+                    }
                 }
             }
         }
