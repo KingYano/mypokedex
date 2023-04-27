@@ -4,7 +4,11 @@
       <div class="container">
         <div class="main-content">
           <div class="header-container">
-            <PokemonLogo />
+            <router-link
+                :to="{ name: 'PokemonList'}"
+            >
+              <PokemonLogo />
+            </router-link>
             <PokemonSearchBar
               placeholder="Searh pokemon by name or number"
               bgColor="white"
@@ -24,16 +28,12 @@
 <script lang="js">
 import PokemonLogo from "@/components/Widgets/PokemonLogo/PokemonLogo.vue";
 import PokemonSearchBar from "@/components/Widgets/PokemonSearchBar/PokemonSearchBar.vue";
-// import PokemonList from './components/PokemonList/PokemonList.vue';
-// import PokemonInfoCard from './components/PokemonInfoCard/PokemonInfoCard.vue'
 
     export default  {
         name: 'app',
         components: {
           PokemonLogo,
           PokemonSearchBar,
-          // PokemonList,
-          // PokemonInfoCard
         },
         props: {
 
