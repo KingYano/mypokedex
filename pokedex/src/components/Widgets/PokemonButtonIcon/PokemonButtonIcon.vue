@@ -7,6 +7,7 @@
         :loading="loading"
         :size="size"
         :icon="icon"
+        :variant="variant"
     >
     </v-btn>
 
@@ -20,19 +21,21 @@
 
         },
         props: {
+            // disabled: false or true.
             disabled: {
                 type: Boolean,
                 default: true,
             },
             color: {
                 type: String,
-                default: 'info',
+                default: '',
             },
+            // loading: false or true.
             loading: {
                 type: Boolean,
                 default: false,
             },
-            // sizes: x-small, small, default, large, and x-large.
+            // sizes: x-small, small, default, large and x-large.
             size: {
                 type: String,
                 default: 'default'
@@ -41,6 +44,11 @@
                 type: String,
                 default: 'mdi-plus',
             },
+            // variant: text, flat, elevated, tonal, outlined and plain.
+            variant: {
+                type: String,
+                default: '',
+            }
         },
         data () {
             return {

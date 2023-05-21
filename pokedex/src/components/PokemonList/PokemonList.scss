@@ -1,3 +1,5 @@
+@import '@/styles/Mixins.scss';
+
 .pokemon-list {
 
     .pokemon-list-container {
@@ -8,16 +10,16 @@
         align-items: center;
     }
 
-    .pokemon-button {
+    .pokemon-command {
         width: 100%;
         display: flex;
         justify-content: center;
 
-        .button-componenent {
-            border-radius: 40px;
+        .button-componenent-text {
+            border-radius: $border-raduis-l;
             background: rgba(255, 255, 255, 0.7) !important;
             color: black !important;
-            font-weight: 700;
+            font-weight: 700 !important;
         }
     }
 

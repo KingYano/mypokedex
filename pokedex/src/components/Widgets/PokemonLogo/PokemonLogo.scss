@@ -1,5 +1,7 @@
+@import '@/styles/Mixins.scss';
+
 .widget-logo {
-    border-radius: 40px;
+    border-radius: $border-raduis-l;
     padding: 1px;
     height: 60px;
     width: 60px;

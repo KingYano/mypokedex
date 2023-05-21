@@ -1,14 +1,16 @@
-@import '../../styles/ColorType.scss';
+@import '@/styles/ColorType.scss';
+@import '@/styles/Mixins.scss';
 
 .pokemon-card {
     width: 301px;
     height: 300px;
-    border-radius: 40px;
+    border-radius: $border-raduis-l;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     background: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+
 
     .pokemon-image {
         img {
@@ -41,7 +43,7 @@
             .pokemon-type {
                 width: 100px;
                 text-align: center;
-                border-radius: 40px;
+                border-radius: $border-raduis-l;
                 text-transform: capitalize;
                 font-weight: 450;
 

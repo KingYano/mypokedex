@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import PokemonList from './components/PokemonList/PokemonList.vue';
-import PokemonInfoCard from './components/PokemonInfoCard/PokemonInfoCard.vue';
+import PokemonInfo from './components/PokemonInfo/PokemonInfo.vue';
 
 const routes = [
   {
@@ -10,8 +10,8 @@ const routes = [
   },
   {
     path: '/pokemon/:id',
-    name: 'PokemonInfoCard',
-    component: PokemonInfoCard,
+    name: 'PokemonInfo',
+    component: PokemonInfo,
     props: true
   }
 ];

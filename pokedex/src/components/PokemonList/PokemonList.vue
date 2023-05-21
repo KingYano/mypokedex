@@ -6,7 +6,7 @@
                 class="pokemon-card"
                 v-for="pokemon in pokemons"
                 :key="pokemon.name"
-                :to="{ name: 'PokemonInfoCard', params: { id: pokemon.id } }"
+                :to="{ name: 'PokemonInfo', params: { id: pokemon.id } }"
             >
                 <PokemonCard
                     :name="pokemon.name"
@@ -17,12 +17,12 @@
                 />
             </router-link>
         </div>
-        <div class="pokemon-button">
+        <div class="pokemon-command">
             <PokemonButtonText
                 :disabled="this.offsetPokemon + this.limit >= maxPokemons ? isDisabledButton = true : isDisabledButton = false "
                 :loading="isLoadingStateButton"
                 @click="loadMorePokemons"
-                texte="Charger 21 Pokémons supplémentaire"
+                texte="Load 21 additional Pokémons"
             />
         </div>
     </div>
