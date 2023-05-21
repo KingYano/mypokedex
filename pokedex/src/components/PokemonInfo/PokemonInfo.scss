@@ -1,0 +1,44 @@
+@import '@/styles/ColorType.scss';
+@import '@/styles/Mixins.scss';
+
+.pokemon-info {
+    .pokemon-static-content {
+
+        .pokemon-identity {
+            display: flex;
+            justify-content: space-between;
+            font-size: 25px;
+        }
+
+        .pokemon-visual {
+            display: flex;
+            justify-content: center;
+
+            .pokemon-image {
+                width: 330px;
+                image-rendering: pixelated;
+            }
+        }
+
+        .pokemon-types {
+            color: $color-text-types;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            .pokemon-type {
+                width: 100px;
+                text-align: center;
+                border-radius: $border-raduis-l;
+                text-transform: capitalize;
+                font-weight: 450;
+
+                @each $type in ('normal', 'fighting', 'flying', 'poison', 'ground', 'rock', 'bug', 'ghost', 'steel', 'fire', 'water', 'grass', 'electric', 'psychic', 'ice', 'dragon', 'dark', 'fairy') {
+                    &-#{$type} {
+                      @include pokemon-type-color($type);
+                    }
+                }
+            }
+        }
+    }
+}

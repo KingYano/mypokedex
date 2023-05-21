@@ -1,17 +1,19 @@
 <template lang="html">
 
     <div class="pokemon-info">
-        <div class="pokemon-identity">
+        <div class="pokemon-static-content">
+          <div class="pokemon-identity">
             <h2 class="pokemon-name">{{ pokemon.name }}</h2>
             <h2>#{{ pokemon.id }}</h2>
-        </div>
-        <div class="pokemon-image">
-            <img :src="pokemon.imageUrl" :alt="'Picture of the Pokemon'"/>
-        </div>
-        <div class="pokemon-types">
-            <p class="pokemon-type" :class="`pokemon-type-${type.toLowerCase()}`" v-for="(type, index) in pokemon.types" :key="index">
-                {{ type }}
-            </p>
+          </div>
+          <div class="pokemon-visual">
+              <img class="pokemon-image" :src="pokemon.imageUrl" :alt="'Picture of the Pokemon ' + pokemon.name"/>
+          </div>
+          <div class="pokemon-types">
+              <p class="pokemon-type" :class="`pokemon-type-${type.toLowerCase()}`" v-for="(type, index) in pokemon.types" :key="index">
+                  {{ type }}
+              </p>
+          </div>
         </div>
         <div class="separation"></div>
         <div class="pokemon-command">
@@ -37,7 +39,7 @@
                 @click="switchPOkemonGames"
             />
         </div>
-        <div class="pokemon-content">
+        <div class="pokemon-switch-content">
             <PokemonInfoDescription
                v-if="showPOkemonDescription"
             />
@@ -84,7 +86,26 @@ export default {
     };
   },
   methods: {
+    async fetchPokemonData() {
+      try {
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
+        const { id, name, types, sprites } = response.data;
+        const imageUrl = sprites.front_default;
+
+        this.pokemon = {
+          id,
+          name,
+          types: types.map((type) => type.type.name),
+          imageUrl,
+        };
+
+        console.log('test', this.pokemon);
+      } catch (error) {
+        console.log('Erreur lors de la récupération des données du Pokémon:', error);
+      }
+    },
     switchPOkemonDescription() {
+      console.log('test2', this.pokemon.name)
       this.showPOkemonDescription = true;
       this.showPOkemonEvolution = false;
       this.showPOkemonGames = false;
@@ -100,26 +121,13 @@ export default {
       this.showPOkemonGames = true;
     },
 
-
-    // capitaliseFirstLetterNamePokemon() {
-    //   return this.pokemon.name.charAt(0).toUpperCase() + this.pokemon.name.slice(1);
-    // },
-    async fetchPokemonData() {
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
-      const { id, name, types, sprites } = response.data;
-      const imageUrl = sprites.front_default;
-
-      this.pokemon = {
-        id,
-        name,
-        types: types.map((type) => type.type.name),
-        imageUrl,
-      };
+    capitaliseFirstLetterNamePokemon() {
+      return this.pokemon.name.charAt(0).toUpperCase() + this.pokemon.name.slice(1);
     },
   },
   computed: {
     
-  },
+    },
   mounted() {
     this.fetchPokemonData();
   },
