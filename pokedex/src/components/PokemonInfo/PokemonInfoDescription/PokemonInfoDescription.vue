@@ -2,13 +2,13 @@
 
     <div class="pokemon-info-description">
         <div class="pokemon-paragraph">
-            <p>Description</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore assumenda nam, commodi voluptatibus temporibus debitis, fugit eum neque quod corrupti iste placeat dicta aliquid perspiciatis, iusto dolor incidunt optio hic!</p>
+            <p class="i-description">Description :</p>
+            <p class="i-description-content">{{description}}</p>
         </div>
         <div class="pokemon-stat">
-            <p>Abilities : XXX</p>
-            <p>Weight : XXX</p>
-            <p>Height : XXX</p>
+            <p class="pokemon-stat--abilities">Abilities: <span class="pokemon-stat-data pokemon-abilitie" v-for="ability in abilities" :key="ability">{{ ability }}</span></p>
+            <p class="pokemon-stat--weight">Weight : <span class="pokemon-stat-data">{{weight}} kg</span></p>
+            <p class="pokemon-stat--height">Height : <span class="pokemon-stat-data">{{height}} cm</span></p>
         </div>
     </div>
 
@@ -21,22 +21,37 @@
         components: {
 
         },
-        props: {    
-            
+        props: {
+            description: {
+                type: String,
+                default: 'No existing description.'
+            },
+            weight: {
+                type: Number,
+                default: 0
+            },
+            height: {
+                type: Number,
+                default: 0
+            },
+            abilities: {
+                type: Array,
+                default: () => []
+            },
         },
         data () {
             return {
-                
+
             }
         },
         methods: {
         },
         computed: {
-            
+
         }
     }
 </script>
 
 <style lang="scss">
-    
+    @import "../PokemonInfoDescription/PokemonInfoDescription.scss";
 </style>

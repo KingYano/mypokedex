@@ -1,0 +1,30 @@
+.pokemon-info-description {
+    .pokemon-paragraph {
+        padding: 10px 0 ;
+        .i-description {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .i-description-content {
+            font-weight: 400;
+            text-align: justify;
+        }
+    }
+
+    .pokemon-stat {
+        padding: 10px 0;
+        font-weight: 600;
+
+        .pokemon-stat-data {
+            font-weight: initial;
+        }
+
+        &--abilities {
+
+            .pokemon-abilitie {
+                margin-right: 10px
+            }
+        }
+    }
+}

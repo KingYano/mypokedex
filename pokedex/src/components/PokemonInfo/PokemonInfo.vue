@@ -3,11 +3,11 @@
     <div class="pokemon-info">
         <div class="pokemon-static-content">
           <div class="pokemon-identity">
-            <h2 class="pokemon-name">{{ pokemon.name }}</h2>
+            <h2 class="pokemon-name">{{ capitaliseNamePokemon }}</h2>
             <h2>#{{ pokemon.id }}</h2>
           </div>
           <div class="pokemon-visual">
-              <img class="pokemon-image" :src="pokemon.imageUrl" :alt="'Picture of the Pokemon ' + pokemon.name"/>
+              <img class="pokemon-image" :src="pokemon.imageUrl" :alt="'Picture of the Pokemon ' + capitaliseNamePokemon"/>
           </div>
           <div class="pokemon-types">
               <p class="pokemon-type" :class="`pokemon-type-${type.toLowerCase()}`" v-for="(type, index) in pokemon.types" :key="index">
@@ -41,7 +41,11 @@
         </div>
         <div class="pokemon-switch-content">
             <PokemonInfoDescription
-               v-if="showPOkemonDescription"
+                v-if="showPOkemonDescription"
+                :weight="formattedWeight"
+                :height="formattedHeight"
+                :abilities="pokemon.abilities"
+                :description="cleanedDescription"
             />
             <PokemonInfoEvolution
                v-if="showPOkemonEvolution"
@@ -57,6 +61,7 @@
 
 <script lang="js">
 import axios from 'axios';
+import { capitalizeWord } from '@/general.js';
 import PokemonButtonText from "@/components/Widgets/PokemonButtonText/PokemonButtonText.vue";
 import PokemonInfoDescription from "@/components/PokemonInfo/PokemonInfoDescription/PokemonInfoDescription.vue";
 import PokemonInfoEvolution from "@/components/PokemonInfo/PokemonInfoEvolution/PokemonInfoEvolution.vue";
@@ -89,23 +94,36 @@ export default {
     async fetchPokemonData() {
       try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
-        const { id, name, types, sprites } = response.data;
+        const responseSpecies = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${this.id}`);
+
+        const { id, name, types, sprites, abilities, weight, height } = response.data;
+        const { flavor_text_entries, game_indices } = responseSpecies.data;
         const imageUrl = sprites.front_default;
+
+        // Filter English description
+        const description = flavor_text_entries.find((entry) => entry.language.name === 'en');
+
+        // Fetch game names
+        const games = game_indices ? game_indices.map(game => game.version.name) : [];
 
         this.pokemon = {
           id,
           name,
           types: types.map((type) => type.type.name),
+          abilities: abilities.map((ability) => ability.ability.name),
+          weight,
+          height,
+          description: description.flavor_text,
+          games,
           imageUrl,
         };
-
-        console.log('test', this.pokemon);
       } catch (error) {
         console.log('Erreur lors de la récupération des données du Pokémon:', error);
       }
     },
+
+    // Switch entre les différents composants
     switchPOkemonDescription() {
-      console.log('test2', this.pokemon.name)
       this.showPOkemonDescription = true;
       this.showPOkemonEvolution = false;
       this.showPOkemonGames = false;
@@ -120,13 +138,42 @@ export default {
       this.showPOkemonEvolution = false;
       this.showPOkemonGames = true;
     },
-
-    capitaliseFirstLetterNamePokemon() {
-      return this.pokemon.name.charAt(0).toUpperCase() + this.pokemon.name.slice(1);
-    },
   },
   computed: {
-    
+      // Met une majuscule au nom du pokemon
+      capitaliseNamePokemon() {
+        if (this.pokemon && this.pokemon.name) {
+            const word = this.pokemon.name;
+            return capitalizeWord(word);
+        }
+        return '';
+      },
+
+      // Récupère la description de l'API afin de corriger la phrase
+      cleanedDescription() {
+        if (this.pokemon && this.pokemon.description) {
+          const description = this.pokemon.description;
+          const cleanedText = description.replace(/\n/g, ' ').replace(/\f/g, '').trim().toLowerCase();
+          return cleanedText;
+        }
+        return '';
+      },
+
+      // Récupère les valeurs height et weight pour ajouter la décimale
+      formattedWeight() {
+        if (this.pokemon && this.pokemon.weight) {
+          const weight = this.pokemon.weight / 10; // Conversion de l'unité en kilogrammes
+          return weight.toFixed(1); // Formater avec une décimale
+        }
+        return '';
+      },
+      formattedHeight() {
+        if (this.pokemon && this.pokemon.height) {
+          const height = this.pokemon.height / 10; // Conversion de l'unité en mètres
+          return height.toFixed(1); // Formater avec une décimale
+        }
+        return '';
+      }
     },
   mounted() {
     this.fetchPokemonData();
