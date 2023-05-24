@@ -4,7 +4,7 @@
         <div class="pokemon-static-content">
           <div class="pokemon-identity">
             <h2 class="pokemon-name">{{ capitaliseNamePokemon }}</h2>
-            <h2>#{{ pokemon.id }}</h2>
+            <h2>#{{ Number(pokemon.id) }}</h2>
           </div>
           <div class="pokemon-visual">
               <img class="pokemon-image" :src="pokemon.imageUrl" :alt="'Picture of the Pokemon ' + capitaliseNamePokemon"/>
@@ -15,7 +15,9 @@
               </p>
           </div>
         </div>
+
         <div class="separation"></div>
+
         <div class="pokemon-command">
             <PokemonButtonText
                 :class="'pokemon-command__info'"
@@ -42,8 +44,8 @@
         <div class="pokemon-switch-content">
             <PokemonInfoDescription
                 v-if="showPokemonDescription"
-                :weight="formattedWeight"
-                :height="formattedHeight"
+                :weight="Number(formattedWeight)"
+                :height="Number(formattedHeight)"
                 :abilities="pokemon.abilities"
                 :description="cleanedDescription"
             />
@@ -54,7 +56,6 @@
                v-if="showPokemonGames"
             />
         </div>
-
     </div>
 
 </template>
@@ -62,7 +63,9 @@
 <script lang="js">
 import axios from 'axios';
 import { capitalizeWord } from '@/general.js';
+
 import PokemonButtonText from "@/components/Widgets/PokemonButtonText/PokemonButtonText.vue";
+
 import PokemonInfoDescription from "@/components/PokemonInfo/PokemonInfoDescription/PokemonInfoDescription.vue";
 import PokemonInfoEvolution from "@/components/PokemonInfo/PokemonInfoEvolution/PokemonInfoEvolution.vue";
 import PokemonInfoGames from "@/components/PokemonInfo/PokemonInfoGames/PokemonInfoGames.vue";
@@ -87,7 +90,6 @@ export default {
       showPokemonDescription: true,
       showPokemonEvolution: false,
       showPokemonGames: false,
-
     };
   },
   methods: {
@@ -161,18 +163,18 @@ export default {
 
       // Récupère les valeurs height et weight pour ajouter la décimale
       formattedWeight() {
-        if (this.pokemon && this.pokemon.weight) {
+        if (this.pokemon && this.pokemon.weight !== "") {
           const weight = this.pokemon.weight / 10; // Conversion de l'unité en kilogrammes
           return weight.toFixed(1); // Formater avec une décimale
         }
-        return '';
+        return 0; // Valeur par défaut si weight est vide
       },
       formattedHeight() {
-        if (this.pokemon && this.pokemon.height) {
+        if (this.pokemon && this.pokemon.height !== "") {
           const height = this.pokemon.height / 10; // Conversion de l'unité en mètres
           return height.toFixed(1); // Formater avec une décimale
         }
-        return '';
+        return 0; // Valeur par défaut si height est vide
       }
     },
   mounted() {
@@ -182,5 +184,5 @@ export default {
 </script>
 
 <style lang="scss">
-    @import "../PokemonInfo/PokemonInfo.scss";
+@import "../PokemonInfo/PokemonInfo.scss";
 </style>

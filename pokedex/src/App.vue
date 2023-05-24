@@ -5,15 +5,18 @@
         <div class="main-content">
           <div class="header-container">
             <router-link :to="{ name: 'PokemonList' }">
-              <PokemonLogo :class="{ 'hidden': isLogoHidden }" />
+              <PokemonLogo />
             </router-link>
+
             <PokemonSearchBar
               placeholder="Search pokemon by name or number"
               bgColor="white"
               appendIcon="mdi-magnify"
             />
           </div>
+
           <div class="separation"></div>
+
           <div class="body-container">
             <router-view></router-view>
           </div>

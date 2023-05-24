@@ -40,9 +40,11 @@ html {
         .header-container {
             width: 100%;
             gap: 10px;
+            display: flex;
+            align-items: center;
 
-            .logo-pokemon {
-                display: none;
+            .widget-search-bar {
+                width: 100%;
             }
         }
 
@@ -62,19 +64,6 @@ html {
         background-attachment: fixed;
         background-position: center center;
 
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            .widget-logo {
-                display: block !important;
-            }
-
-            .widget-search-bar {
-                width: 90%;
-            }
-        }
     }
 }
 
