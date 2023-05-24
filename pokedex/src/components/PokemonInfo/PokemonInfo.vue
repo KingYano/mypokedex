@@ -22,36 +22,36 @@
                 texte="Information"
                 variant="text"
                 :disabled="false"
-                @click="switchPOkemonDescription"
+                @click="switchPokemonDescription"
             />
             <PokemonButtonText
                 :class="'pokemon-command__evol'"
                 texte="Evolutions"
                 variant="text"
                 :disabled="false"
-                @click="switchPOkemonEvolution"
+                @click="switchPokemonEvolution"
             />
             <PokemonButtonText
                 :class="'pokemon-command__games'"
                 texte="Games"
                 variant="text"
                 :disabled="false"
-                @click="switchPOkemonGames"
+                @click="switchPokemonGames"
             />
         </div>
         <div class="pokemon-switch-content">
             <PokemonInfoDescription
-                v-if="showPOkemonDescription"
+                v-if="showPokemonDescription"
                 :weight="formattedWeight"
                 :height="formattedHeight"
                 :abilities="pokemon.abilities"
                 :description="cleanedDescription"
             />
             <PokemonInfoEvolution
-               v-if="showPOkemonEvolution"
+               v-if="showPokemonEvolution"
             />
             <PokemonInfoGames
-               v-if="showPOkemonGames"
+               v-if="showPokemonGames"
             />
         </div>
 
@@ -84,9 +84,9 @@ export default {
   data() {
     return {
       pokemon: {},
-      showPOkemonDescription: true,
-      showPOkemonEvolution: false,
-      showPOkemonGames: false,
+      showPokemonDescription: true,
+      showPokemonEvolution: false,
+      showPokemonGames: false,
 
     };
   },
@@ -123,20 +123,20 @@ export default {
     },
 
     // Switch entre les différents composants
-    switchPOkemonDescription() {
-      this.showPOkemonDescription = true;
-      this.showPOkemonEvolution = false;
-      this.showPOkemonGames = false;
+    switchPokemonDescription() {
+      this.showPokemonDescription = true;
+      this.showPokemonEvolution = false;
+      this.showPokemonGames = false;
     },
-    switchPOkemonEvolution() {
-      this.showPOkemonDescription = false;
-      this.showPOkemonEvolution = true;
-      this.showPOkemonGames = false;
+    switchPokemonEvolution() {
+      this.showPokemonDescription = false;
+      this.showPokemonEvolution = true;
+      this.showPokemonGames = false;
     },
-    switchPOkemonGames() {
-      this.showPOkemonDescription = false;
-      this.showPOkemonEvolution = false;
-      this.showPOkemonGames = true;
+    switchPokemonGames() {
+      this.showPokemonDescription = false;
+      this.showPokemonEvolution = false;
+      this.showPokemonGames = true;
     },
   },
   computed: {

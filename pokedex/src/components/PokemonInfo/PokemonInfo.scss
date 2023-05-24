@@ -3,7 +3,6 @@
 
 .pokemon-info {
     .pokemon-static-content {
-
         .pokemon-identity {
             display: flex;
             justify-content: space-between;
@@ -39,6 +38,15 @@
                     }
                 }
             }
+        }
+    }
+
+    .pokemon-command {
+        margin: 10px 0;
+        .button-componenent-text {
+            margin: 5px;
+            border-radius: 40px;
+            background-color: white;
         }
     }
 }

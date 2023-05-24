@@ -4,13 +4,11 @@
       <div class="container">
         <div class="main-content">
           <div class="header-container">
-            <router-link
-                :to="{ name: 'PokemonList'}"
-            >
-              <PokemonLogo />
+            <router-link :to="{ name: 'PokemonList' }">
+              <PokemonLogo :class="{ 'hidden': isLogoHidden }" />
             </router-link>
             <PokemonSearchBar
-              placeholder="Searh pokemon by name or number"
+              placeholder="Search pokemon by name or number"
               bgColor="white"
               appendIcon="mdi-magnify"
             />
@@ -29,29 +27,33 @@
 import PokemonLogo from "@/components/Widgets/PokemonLogo/PokemonLogo.vue";
 import PokemonSearchBar from "@/components/Widgets/PokemonSearchBar/PokemonSearchBar.vue";
 
-    export default  {
-        name: 'app',
-        components: {
-          PokemonLogo,
-          PokemonSearchBar,
-        },
-        props: {
+export default {
+  name: 'app',
+  components: {
+    PokemonLogo,
+    PokemonSearchBar,
+  },
+  data() {
+    return {
+      windowWidth: 0
+    };
+  },
+  methods: {
 
-        },
-        data () {
-            return {
-              
-            }
-        },
-        methods: {
-          
-        },
-        computed: {
-
-        }
+  },
+  computed: {
+    isLogoHidden() {
+      return this.windowWidth <= 391;
     }
+  },
+  mounted() {
+
+  },
+};
 </script>
 
 <style lang="scss">
-  // @import "@/styles/App.scss";
+.hidden {
+  display: none;
+}
 </style>
