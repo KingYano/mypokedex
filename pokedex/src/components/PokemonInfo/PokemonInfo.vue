@@ -51,6 +51,7 @@
             />
             <PokemonInfoEvolution
                v-if="showPokemonEvolution"
+               :evolutions="pokemon.evolutions"
             />
             <PokemonInfoGames
                v-if="showPokemonGames"
@@ -87,6 +88,7 @@ export default {
   data() {
     return {
       pokemon: {},
+      evolutions: [],
       showPokemonDescription: true,
       showPokemonEvolution: false,
       showPokemonGames: false,
@@ -108,6 +110,14 @@ export default {
         // Fetch game names
         const games = game_indices ? game_indices.map(game => game.version.name) : [];
 
+        // Récupérez les données de la chaîne d'évolution
+      const evolutionChainUrl = responseSpecies.data.evolution_chain.url;
+      const evolutionChainResponse = await axios.get(evolutionChainUrl);
+      const evolutionChainData = evolutionChainResponse.data;
+
+      // Récupérez les informations d'évolution
+      const evolutions = this.searchEvolutions(evolutionChainData.chain);
+
         this.pokemon = {
           id,
           name,
@@ -118,11 +128,40 @@ export default {
           description: description.flavor_text,
           games,
           imageUrl,
+          evolutions,
         };
       } catch (error) {
         console.log('Erreur lors de la récupération des données du Pokémon:', error);
       }
     },
+
+    searchEvolutions(evolutionData) {
+      const evolutions = [];
+
+      const searchEvolution = (data) => {
+      const evolutionDetails = data.evolution_details[0];
+      const name = data.species.name;
+      const pokemonId = data.species.url.split('/')[6];
+      const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+      const level = evolutionDetails ? evolutionDetails.min_level : null;
+
+      evolutions.push({
+        name,
+        imageUrl,
+        level,
+      });
+
+      if (data.evolves_to.length > 0) {
+        data.evolves_to.forEach((evolvesTo) => {
+          searchEvolution(evolvesTo);
+        });
+      }
+    };
+
+    searchEvolution(evolutionData);
+    return evolutions;
+},
+
 
     // Switch entre les différents composants
     switchPokemonDescription() {
