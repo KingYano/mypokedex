@@ -4,9 +4,9 @@
 .pokemon-info {
     .pokemon-static-content {
         .pokemon-identity {
-            display: flex;
-            justify-content: space-between;
-            font-size: 25px;
+            // display: flex;
+            // justify-content: space-between;
+            font-size: 24px;
         }
 
         .pokemon-visual {
@@ -44,9 +44,23 @@
     .pokemon-command {
         margin: 10px 0;
         .button-componenent-text {
+            font-size: 11px !important;
             margin: 5px;
             border-radius: 40px;
             background-color: white;
+        }
+    }
+}
+
+
+// Media screen when the format is desktop
+@media only screen and (min-width: 710px) {
+    .pokemon-info {
+
+        .pokemon-command {
+            .button-componenent-text {
+                font-size: initial !important;
+            }
         }
     }
 }

@@ -1,16 +1,16 @@
 <template lang="html">
 
     <div class="pokemon-info-evolution">
-        <p>Evolution</p>
-
-        <div>
-            <div v-for="(evolution, index) in evolutions" :key="index">
-                <div>
-                    <img :src="evolution.imageUrl" :alt="'Picture of ' + evolution.name" />
-                </div>
-                <div>
+        <div class="pokemon-list-content">
+            <div class="pokemon-content" v-for="(evolution, index) in evolutions" :key="index">
+                <div class="pokemon-title">
                     <p>{{ evolution.name }}</p>
-                    <p v-if="evolution.level">Level: {{ evolution.level }}</p>
+                </div>
+                <div class="pokemon-content-image">
+                    <img class="pokemon-image" :src="evolution.imageUrl" :alt="'Picture of ' + evolution.name" />
+                </div>
+                <div class="pokemon-content-level">
+                    <p class="pokemon-level" v-if="evolution.level"> (Level : {{ evolution.level }})</p>
                 </div>
             </div>
         </div>
@@ -39,10 +39,11 @@
         methods: {
         },
         computed: {
-
+            
         }
     }
 </script>
 
 <style lang="scss">
+    @import "../PokemonInfoEvolution/PokemonInfoEvolution.scss";
 </style>

@@ -1,0 +1,46 @@
+.pokemon-info-evolution {
+
+    .pokemon-list-content {
+        gap: 15px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .pokemon-content {
+            .pokemon-title {
+                font-size: 18px;
+                font-weight: 450;
+            }
+
+            .pokemon-content-image {
+                .pokemon-image {
+                    width: 230px;
+                    image-rendering: pixelated;
+                }
+            }
+
+            .pokemon-content-level {
+                .pokemon-level {
+                    font-size: 12px;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+
+// Media screen when the format is desktop
+@media only screen and (min-width: 828px) {
+    .pokemon-info-evolution {
+
+        .pokemon-list-content {
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+    }
+}
