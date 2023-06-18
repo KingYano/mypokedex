@@ -1,9 +1,10 @@
 <template lang="html">
 
     <div class="pokemon-info-games">
+        <h3>List of Game Versions</h3>
         <div class="pokemon-list">
             <div class="pokemon-item">
-                <p>Game : xxxxxx</p>
+                <p v-for="version in gameVersions" :key="version">Pokemon {{ version }}</p>
             </div>
         </div>
     </div>
@@ -17,18 +18,21 @@
         components: {
 
         },
-        props: {    
-            
+        props: {
+            gameVersions: {
+                type: Array,
+                required: true,
+            },
         },
         data () {
             return {
-                
+
             }
         },
         methods: {
         },
         computed: {
-            
+
         }
     }
 </script>

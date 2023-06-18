@@ -55,6 +55,7 @@
             />
             <PokemonInfoGames
                v-if="showPokemonGames"
+               :gameVersions="gameVersions"
             />
         </div>
     </div>
@@ -89,6 +90,7 @@ export default {
     return {
       pokemon: {},
       evolutions: [],
+      gameVersions: [],
       showPokemonDescription: true,
       showPokemonEvolution: false,
       showPokemonGames: false,
@@ -98,25 +100,28 @@ export default {
     async fetchPokemonData() {
       try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
+        console.log(response.data.game_indices[0].version.name);
         const responseSpecies = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${this.id}`);
 
-        const { id, name, types, sprites, abilities, weight, height } = response.data;
-        const { flavor_text_entries, game_indices } = responseSpecies.data;
+        const { id, name, types, sprites, abilities, weight, height, game_indices} = response.data;
+        const { flavor_text_entries } = responseSpecies.data;
         const imageUrl = sprites.front_default;
+
 
         // Filter English description
         const description = flavor_text_entries.find((entry) => entry.language.name === 'en');
 
         // Fetch game names
-        const games = game_indices ? game_indices.map(game => game.version.name) : [];
+        const gameVersions = response.data.game_indices.map((index) => index.version.name);
+        this.gameVersions = gameVersions;
 
         // Récupérez les données de la chaîne d'évolution
-      const evolutionChainUrl = responseSpecies.data.evolution_chain.url;
-      const evolutionChainResponse = await axios.get(evolutionChainUrl);
-      const evolutionChainData = evolutionChainResponse.data;
+        const evolutionChainUrl = responseSpecies.data.evolution_chain.url;
+        const evolutionChainResponse = await axios.get(evolutionChainUrl);
+        const evolutionChainData = evolutionChainResponse.data;
 
-      // Récupérez les informations d'évolution
-      const evolutions = this.searchEvolutions(evolutionChainData.chain);
+        // Récupérez les informations d'évolution
+        const evolutions = this.searchEvolutions(evolutionChainData.chain);
 
         this.pokemon = {
           id,
@@ -125,8 +130,8 @@ export default {
           abilities: abilities.map((ability) => ability.ability.name),
           weight,
           height,
+          game_indices,
           description: description.flavor_text,
-          games,
           imageUrl,
           evolutions,
         };
