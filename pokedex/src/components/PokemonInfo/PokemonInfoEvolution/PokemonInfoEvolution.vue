@@ -1,6 +1,7 @@
 <template lang="html">
 
     <div class="pokemon-info-evolution">
+        <h3>Evolutions :</h3>
         <div class="pokemon-list-content">
             <div class="pokemon-content" v-for="(evolution, index) in evolutions" :key="index">
                 <div class="pokemon-title">

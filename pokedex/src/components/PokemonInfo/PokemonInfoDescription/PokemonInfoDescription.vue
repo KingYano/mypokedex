@@ -1,6 +1,7 @@
 <template lang="html">
 
     <div class="pokemon-info-description">
+        <h3>Detail :</h3>
         <div class="pokemon-paragraph">
             <p class="i-description">Description :</p>
             <p class="i-description-content">{{description}}</p>

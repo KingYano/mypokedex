@@ -1,0 +1,19 @@
+
+
+// Media screen when the format is desktop
+@media only screen and (min-width: 710px) {
+    .pokemon-info-games {
+
+        .pokemon-list {
+            gap: 45px;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+
+            .pokemon-item {
+                padding: 5px;
+            }
+        }
+    }
+}
