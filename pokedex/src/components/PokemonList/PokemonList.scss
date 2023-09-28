@@ -18,8 +18,15 @@
         .button-componenent-text {
             border-radius: $border-raduis-l;
             background: rgba(255, 255, 255, 0.7) !important;
-            color: black !important;
             font-weight: 700 !important;
+
+            .v-btn__content {
+                color: black !important;
+            }
+
+            .v-btn__loader {
+                color: yellow !important;
+            }
         }
     }
 

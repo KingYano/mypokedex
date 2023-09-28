@@ -1,71 +1,81 @@
 <template lang="html">
 
-    <div class="pokemon-info">
-        <div class="pokemon-static-content">
-          <div class="pokemon-identity">
-            <h2 class="pokemon-name">{{ capitaliseNamePokemon }}</h2>
-            <h2>#{{ Number(pokemon.id) }}</h2>
-          </div>
-          <div class="pokemon-visual">
-              <img class="pokemon-image" :src="pokemon.imageUrl" :alt="'Picture of the Pokemon ' + capitaliseNamePokemon"/>
-          </div>
-          <div class="pokemon-types">
-              <p class="pokemon-type" :class="`pokemon-type-${type.toLowerCase()}`" v-for="(type, index) in pokemon.types" :key="index">
-                  {{ type }}
-              </p>
-          </div>
-        </div>
-
-        <div class="separation"></div>
-
-        <div class="pokemon-command">
-            <PokemonButtonText
-                :class="'pokemon-command__info'"
-                texte="Information"
-                variant="text"
-                :disabled="false"
-                @click="switchPokemonDescription"
-            />
-            <PokemonButtonText
-                :class="'pokemon-command__evol'"
-                texte="Evolutions"
-                variant="text"
-                :disabled="false"
-                @click="switchPokemonEvolution"
-            />
-            <PokemonButtonText
-                :class="'pokemon-command__games'"
-                texte="Games"
-                variant="text"
-                :disabled="false"
-                @click="switchPokemonGames"
-            />
-        </div>
-        <div class="pokemon-switch-content">
-            <PokemonInfoDescription
-                v-if="showPokemonDescription"
-                :weight="Number(formattedWeight)"
-                :height="Number(formattedHeight)"
-                :abilities="pokemon.abilities"
-                :description="cleanedDescription"
-            />
-            <PokemonInfoEvolution
-               v-if="showPokemonEvolution"
-               :evolutions="pokemon.evolutions"
-            />
-            <PokemonInfoGames
-               v-if="showPokemonGames"
-               :gameVersions="gameVersions"
-            />
-        </div>
+  <div class="pokemon-info">
+    <div class="pokemon-progress-loader" v-if="isLoading">
+      <PokemonProgressLoading
+        size=100
+        width=5
+        color="yellow"
+      >
+      </PokemonProgressLoading>
     </div>
+    <div class="pokemon-info-content" v-else>
+      <div class="pokemon-static-content">
+        <div class="pokemon-identity">
+          <h2 class="pokemon-name">{{ capitaliseFirstLetterName }}</h2>
+          <h2>#{{ Number(pokemon.id) }}</h2>
+        </div>
+        <div class="pokemon-visual">
+            <img class="pokemon-image" :src="pokemon.imageUrl" :alt="'Picture of the Pokemon ' + capitaliseFirstLetterName"/>
+        </div>
+        <div class="pokemon-types">
+            <p class="pokemon-type" :class="`pokemon-type-${type.toLowerCase()}`" v-for="(type, index) in pokemon.types" :key="index">
+                {{ type }}
+            </p>
+        </div>
+      </div>
+
+      <div class="separation"></div>
+
+      <div class="pokemon-command">
+        <PokemonButtonText
+            :class="'pokemon-command__info'"
+            texte="Information"
+            variant="text"
+            :disabled="false"
+            @click="switchPokemonDescription"
+        />
+        <PokemonButtonText
+            :class="'pokemon-command__evol'"
+            texte="Evolutions"
+            variant="text"
+            :disabled="false"
+            @click="switchPokemonEvolution"
+        />
+        <PokemonButtonText
+            :class="'pokemon-command__games'"
+            texte="Games"
+            variant="text"
+            :disabled="false"
+            @click="switchPokemonGames"
+        />
+      </div>
+      <div class="pokemon-switch-content">
+        <PokemonInfoDescription
+            v-if="showPokemonDescription"
+            :weight="Number(formattedWeight)"
+            :height="Number(formattedHeight)"
+            :abilities="pokemon.abilities"
+            :description="cleanedDescription"
+        />
+        <PokemonInfoEvolution
+            v-if="showPokemonEvolution"
+            :evolutions="pokemon.evolutions"
+        />
+        <PokemonInfoGames
+            v-if="showPokemonGames"
+            :gameVersions="gameVersions"
+        />
+      </div>
+    </div>
+  </div>
 
 </template>
 
 <script lang="js">
 import axios from 'axios';
-import { capitalizeWord } from '@/general.js';
 
+import PokemonProgressLoading from "@/components/Widgets/PokemonProgressLoading/PokemonProgressLoading.vue";
 import PokemonButtonText from "@/components/Widgets/PokemonButtonText/PokemonButtonText.vue";
 
 import PokemonInfoDescription from "@/components/PokemonInfo/PokemonInfoDescription/PokemonInfoDescription.vue";
@@ -76,6 +86,7 @@ import PokemonInfoGames from "@/components/PokemonInfo/PokemonInfoGames/PokemonI
 export default {
   name: 'pokemon-info',
   components: {
+    PokemonProgressLoading,
     PokemonButtonText,
     PokemonInfoDescription,
     PokemonInfoEvolution,
@@ -83,7 +94,7 @@ export default {
   },
   props: {
     id: {
-      type: Number,
+      type: String,
     },
   },
   data() {
@@ -94,19 +105,18 @@ export default {
       showPokemonDescription: true,
       showPokemonEvolution: false,
       showPokemonGames: false,
+      isLoading: true,
     };
   },
   methods: {
     async fetchPokemonData() {
       try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
-        console.log(response.data.game_indices[0].version.name);
         const responseSpecies = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${this.id}`);
 
-        const { id, name, types, sprites, abilities, weight, height, game_indices} = response.data;
+        const { id, name, types, sprites, abilities, weight, height, game_indices } = response.data;
         const { flavor_text_entries } = responseSpecies.data;
         const imageUrl = sprites.front_default;
-
 
         // Filter English description
         const description = flavor_text_entries.find((entry) => entry.language.name === 'en');
@@ -135,8 +145,11 @@ export default {
           imageUrl,
           evolutions,
         };
+
+        this.isLoading = false; // Marque le chargement comme terminé
       } catch (error) {
         console.log('Erreur lors de la récupération des données du Pokémon:', error);
+        this.isLoading = false; // Assurez-vous de marquer le chargement comme terminé en cas d'erreur
       }
     },
 
@@ -165,62 +178,60 @@ export default {
 
     searchEvolution(evolutionData);
     return evolutions;
+  },
+
+  // Switch entre les différents composants
+  switchPokemonDescription() {
+    this.showPokemonDescription = true;
+    this.showPokemonEvolution = false;
+    this.showPokemonGames = false;
+  },
+  switchPokemonEvolution() {
+    this.showPokemonDescription = false;
+    this.showPokemonEvolution = true;
+    this.showPokemonGames = false;
+  },
+  switchPokemonGames() {
+    this.showPokemonDescription = false;
+    this.showPokemonEvolution = false;
+    this.showPokemonGames = true;
+  },
 },
 
-
-    // Switch entre les différents composants
-    switchPokemonDescription() {
-      this.showPokemonDescription = true;
-      this.showPokemonEvolution = false;
-      this.showPokemonGames = false;
-    },
-    switchPokemonEvolution() {
-      this.showPokemonDescription = false;
-      this.showPokemonEvolution = true;
-      this.showPokemonGames = false;
-    },
-    switchPokemonGames() {
-      this.showPokemonDescription = false;
-      this.showPokemonEvolution = false;
-      this.showPokemonGames = true;
-    },
-  },
   computed: {
-      // Met une majuscule au nom du pokemon
-      capitaliseNamePokemon() {
-        if (this.pokemon && this.pokemon.name) {
-            const word = this.pokemon.name;
-            return capitalizeWord(word);
-        }
-        return '';
-      },
 
-      // Récupère la description de l'API afin de corriger la phrase
-      cleanedDescription() {
-        if (this.pokemon && this.pokemon.description) {
-          const description = this.pokemon.description;
-          const cleanedText = description.replace(/\n/g, ' ').replace(/\f/g, '').trim().toLowerCase();
-          return cleanedText;
-        }
-        return '';
-      },
-
-      // Récupère les valeurs height et weight pour ajouter la décimale
-      formattedWeight() {
-        if (this.pokemon && this.pokemon.weight !== "") {
-          const weight = this.pokemon.weight / 10; // Conversion de l'unité en kilogrammes
-          return weight.toFixed(1); // Formater avec une décimale
-        }
-        return 0; // Valeur par défaut si weight est vide
-      },
-      formattedHeight() {
-        if (this.pokemon && this.pokemon.height !== "") {
-          const height = this.pokemon.height / 10; // Conversion de l'unité en mètres
-          return height.toFixed(1); // Formater avec une décimale
-        }
-        return 0; // Valeur par défaut si height est vide
+    capitaliseFirstLetterName() {
+      if (this.pokemon && this.pokemon.name) {
+        return this.pokemon.name.charAt(0).toUpperCase() + this.pokemon.name.slice(1);
       }
+      return '';
     },
+    // Récupère la description de l'API afin de corriger la phrase
+    cleanedDescription() {
+      if (this.pokemon && this.pokemon.description) {
+        const description = this.pokemon.description;
+        const cleanedText = description.replace(/\n/g, ' ').replace(/\f/g, '').trim().toLowerCase();
+        return cleanedText;
+      }
+      return '';
+    },
+
+    // Récupère les valeurs height et weight pour ajouter la décimale
+    formattedWeight() {
+      if (this.pokemon && this.pokemon.weight !== "") {
+        const weight = this.pokemon.weight / 10; // Conversion de l'unité en kilogrammes
+        return weight.toFixed(1); // Formater avec une décimale
+      }
+      return 0; // Valeur par défaut si weight est vide
+    },
+    formattedHeight() {
+      if (this.pokemon && this.pokemon.height !== "") {
+        const height = this.pokemon.height / 10; // Conversion de l'unité en mètres
+        return height.toFixed(1); // Formater avec une décimale
+      }
+      return 0; // Valeur par défaut si height est vide
+    }
+  },
   mounted() {
     this.fetchPokemonData();
   },

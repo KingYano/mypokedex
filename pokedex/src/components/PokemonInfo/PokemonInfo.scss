@@ -2,52 +2,68 @@
 @import '@/styles/Mixins.scss';
 
 .pokemon-info {
-    .pokemon-static-content {
-        .pokemon-identity {
-            // display: flex;
-            // justify-content: space-between;
-            font-size: 24px;
-        }
 
-        .pokemon-visual {
-            display: flex;
-            justify-content: center;
+    .pokemon-progress-loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 350px;
+    }
 
-            .pokemon-image {
-                width: 330px;
-                image-rendering: pixelated;
+    .pokemon-info-content {
+        .pokemon-static-content {
+            .pokemon-identity {
+                // display: flex;
+                // justify-content: space-between;
+                font-size: 24px;
             }
-        }
-
-        .pokemon-types {
-            color: $color-text-types;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-
-            .pokemon-type {
-                width: 100px;
-                text-align: center;
-                border-radius: $border-raduis-l;
-                text-transform: capitalize;
-                font-weight: 450;
-
-                @each $type in ('normal', 'fighting', 'flying', 'poison', 'ground', 'rock', 'bug', 'ghost', 'steel', 'fire', 'water', 'grass', 'electric', 'psychic', 'ice', 'dragon', 'dark', 'fairy') {
-                    &-#{$type} {
-                      @include pokemon-type-color($type);
+    
+            .pokemon-visual {
+                display: flex;
+                justify-content: center;
+    
+                .pokemon-image {
+                    width: 330px;
+                    image-rendering: pixelated;
+                }
+            }
+    
+            .pokemon-types {
+                color: $color-text-types;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+    
+                .pokemon-type {
+                    width: 100px;
+                    text-align: center;
+                    border-radius: $border-raduis-l;
+                    text-transform: capitalize;
+                    font-weight: 450;
+    
+                    @each $type in ('normal', 'fighting', 'flying', 'poison', 'ground', 'rock', 'bug', 'ghost', 'steel', 'fire', 'water', 'grass', 'electric', 'psychic', 'ice', 'dragon', 'dark', 'fairy') {
+                        &-#{$type} {
+                          @include pokemon-type-color($type);
+                        }
                     }
                 }
             }
         }
-    }
 
-    .pokemon-command {
-        margin: 10px 0;
-        .button-componenent-text {
-            font-size: 11px !important;
-            margin: 5px;
+        .pokemon-command {
+            margin: 10px 0;
+            .button-componenent-text {
+                font-size: 11px !important;
+                margin: 5px;
+                border-radius: 40px;
+                background-color: white;
+            }
+        }
+
+        .pokemon-switch-content {
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 40px;
-            background-color: white;
+            padding: 20px;
         }
     }
 }
@@ -57,9 +73,11 @@
 @media only screen and (min-width: 710px) {
     .pokemon-info {
 
-        .pokemon-command {
-            .button-componenent-text {
-                font-size: initial !important;
+        .pokemon-info-content {
+            .pokemon-command {
+                .button-componenent-text {
+                    font-size: initial !important;
+                }
             }
         }
     }

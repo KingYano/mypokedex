@@ -38,25 +38,21 @@ export default {
   },
   data() {
     return {
-      windowWidth: 0
+
     };
   },
   methods: {
 
   },
   computed: {
-    isLogoHidden() {
-      return this.windowWidth <= 391;
-    }
+
   },
   mounted() {
 
-  },
+},
 };
 </script>
 
 <style lang="scss">
-.hidden {
-  display: none;
-}
+
 </style>

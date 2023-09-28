@@ -4,10 +4,11 @@
         <h3>Detail :</h3>
         <div class="pokemon-paragraph">
             <p class="i-description">Description :</p>
-            <p class="i-description-content">{{description}}</p>
+            <p class="i-description-content">{{ capitaliseFirstLetterDescription() }}</p>
+            <p></p>
         </div>
         <div class="pokemon-stat">
-            <p class="pokemon-stat--abilities">Abilities: <span class="pokemon-stat-data pokemon-abilitie" v-for="ability in abilities" :key="ability">{{ ability }}</span></p>
+            <p class="pokemon-stat--abilities">Abilities: <span class="pokemon-stat-data pokemon-abilitie" v-for="ability in abilities" :key="ability">{{ capitaliseFirstLetterAbility(ability) }}</span></p>
             <p class="pokemon-stat--weight">Weight : <span class="pokemon-stat-data">{{weight}} kg</span></p>
             <p class="pokemon-stat--height">Height : <span class="pokemon-stat-data">{{height}} cm</span></p>
         </div>
@@ -16,7 +17,6 @@
 </template>
 
 <script lang="js">
-
     export default  {
         name: 'pokemon-info-description',
         components: {
@@ -46,9 +46,18 @@
             }
         },
         methods: {
+            capitaliseFirstLetterDescription() {
+                return this.description.charAt(0).toUpperCase() + this.description.slice(1)
+            },
+            capitaliseFirstLetterAbility(ability) {
+                return ability.charAt(0).toUpperCase() + ability.slice(1)
+            }
         },
         computed: {
 
+        },
+        mounted() {
+                console.log(this.description)
         }
     }
 </script>

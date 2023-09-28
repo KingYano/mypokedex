@@ -23,7 +23,8 @@
                 :loading="isLoadingStateButton"
                 @click="loadMorePokemons"
                 texte="Load 21 additional Pokémons"
-            />
+            >
+            </PokemonButtonText>
         </div>
     </div>
 
@@ -50,7 +51,7 @@ import PokemonButtonText from "@/components/Widgets/PokemonButtonText/PokemonBut
                 offsetPokemon: 0,
                 isLoadingStateButton: false,
                 isDisabledButton: false,
-                maxPokemons: 1008,
+                maxPokemons: 100000,
             };
         },
         methods: {
@@ -63,7 +64,6 @@ import PokemonButtonText from "@/components/Widgets/PokemonButtonText/PokemonBut
                 this.isLoadingStateButton = true;
                 this.offsetPokemon += this.limit;
                 this.loadPokemons();
-                console.log( this.offsetPokemon + this.limit)
             },
             loadPokemons() {
                 axios
