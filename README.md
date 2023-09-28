@@ -1,4 +1,4 @@
-# Title: Pokedex with Vue3 and Sass using the PokeAPI ("Work in progress")
+# Title: Pokedex with Vue2 and Sass using the PokeAPI ("Work in progress")
 
 # Description:
 This project consists of creating a Pokedex using the PokeAPI to retrieve information about Pokemon. The Pokedex will be developed with Vue.js and styled with Sass. The design of the Pokedex was created by myself on Figma, and I have taken care to create an intuitive and enjoyable user interface for Pokemon fans.
@@ -10,7 +10,7 @@ This project consists of creating a Pokedex using the PokeAPI to retrieve inform
 
 
 # Technologies Used:
-- Vue3 for the application logic.
+- Vue2 for the application logic.
 - Sass for styling.
 - The PokeAPI to retrieve information about Pokemon.
 - Figma for design.
