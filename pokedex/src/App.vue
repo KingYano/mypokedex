@@ -12,6 +12,8 @@
               placeholder="Search pokemon by name or number"
               bgColor="white"
               appendIcon="mdi-magnify"
+              :searchTerm="searchTerm"
+              @updateSearchTerm="updateSearchTerm"
             />
           </div>
 
@@ -38,11 +40,13 @@ export default {
   },
   data() {
     return {
-
+      searchTerm: '',
     };
   },
   methods: {
-
+    updateSearchTerm(newSearchTerm) {
+      this.searchTerm = newSearchTerm;
+    },
   },
   computed: {
 

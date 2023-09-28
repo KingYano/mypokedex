@@ -55,9 +55,6 @@
         },
         computed: {
 
-        },
-        mounted() {
-                console.log(this.description)
         }
     }
 </script>
