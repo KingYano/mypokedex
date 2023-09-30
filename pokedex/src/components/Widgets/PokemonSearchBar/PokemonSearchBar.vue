@@ -19,9 +19,15 @@
             v-model="searchTerm"
         ></v-text-field>
         <div class="search-bar-list" :class="{ 'search-bar-list--active': searchActive }">
-            <div class="search-bar-item" v-for="(pokemon) in searchResults" :key="pokemon.id">
-                <p>{{ pokemon.id }} - {{ capitaliseNamePokemon(pokemon.name) }}</p>
-            </div>
+                <router-link
+                    class="search-bar-item"
+                    v-for="(pokemon) in searchResults"
+                    :key="pokemon.id"
+                    :to="{ name: 'PokemonInfo', params: { id: pokemon.id } }"
+                    v-on:click="reloadPage"
+                >
+                    <p>{{ pokemon.id }} - {{ capitaliseNamePokemon(pokemon.name) }}</p>
+                </router-link>
                 <p class="search-bar-more" v-if="detailedPokemonDataLength > 5">And {{ detailedPokemonDataLength - 5 }} more...</p>
             <div class="search-bar-list-empty"  v-if="searchResults.length === 0 && searchActive">
                 <p>Aucun Pokémon trouvé.</p>
@@ -124,13 +130,18 @@ import axios from 'axios';
                 }
             },
 
+            reloadPage() {
+                setTimeout(() => {
+                    this.$router.go();
+                }, 1500);
+            },
+
             isOutsideClick(event) {
-                // Vérifiez si l'élément cliqué est en dehors du composant
                 if (
                     this.$refs.searchBarRoot &&
                     !this.$refs.searchBarRoot.contains(event.target)
                 ) {
-                    this.resetSearch(); // Fermez la liste de résultats
+                    this.resetSearch();
                 }
             },
 
