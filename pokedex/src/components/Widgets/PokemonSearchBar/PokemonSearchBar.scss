@@ -1,11 +1,43 @@
 @import '@/styles/Mixins.scss';
 
 .widget-search-bar {
+    width: 100%;
+    position: relative;
+
     .search-bar-component {
         .v-input__control {
             .v-field {
-                border-radius: $border-raduis-l !important;
+                border-radius: $border-raduis-m !important;
             }
+        }
+
+        &--active {
+            .v-input__control {
+                .v-field {
+                    border-bottom-left-radius: unset !important;
+                    border-bottom-right-radius: unset !important;
+                }
+            }
+        }
+    }
+    .search-bar-list {
+        width: 100%;
+        display: none;
+        position: absolute;
+        background-color: white;
+        border-radius: $border-raduis-m;
+        border-top-left-radius: unset;
+        border-top-right-radius: unset;
+
+        .search-bar-item {
+
+        }
+
+        &--active {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            gap: 8px;
         }
     }
 }

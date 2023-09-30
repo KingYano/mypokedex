@@ -47,7 +47,7 @@
             // variant: text, flat, elevated, tonal, outlined and plain.
             variant: {
                 type: String,
-                default: '',
+                default: 'elevated',
             }
         },
         data () {

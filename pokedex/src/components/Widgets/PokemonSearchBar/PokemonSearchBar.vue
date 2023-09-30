@@ -3,6 +3,7 @@
     <div class="widget-search-bar">
         <v-text-field
             class="search-bar-component"
+            :class="{ 'search-bar-component--active': searchActive }"
             :loading="loading"
             :bg-color="bgColor"
             :append-inner-icon="appendIcon"
@@ -13,8 +14,19 @@
             clearable
             hide-details
             @keyup.enter="searchPokemon"
+            @click:clear="resetSearch"
+            @input="handleInput"
             v-model="searchTerm"
         ></v-text-field>
+        <div class="search-bar-list" :class="{ 'search-bar-list--active': searchActive }">
+            <div class="search-bar-item" v-for="(pokemon) in searchResults" :key="pokemon.id">
+                <p>{{ pokemon.id }} - {{ capitaliseNamePokemon(pokemon.name) }}</p>
+            </div>
+                <p class="search-bar-more" v-if="detailedPokemonDataLength > 5">And {{ detailedPokemonDataLength - 5 }} more...</p>
+            <div class="search-bar-list-empty"  v-if="searchResults.length === 0 && searchActive">
+                <p>Aucun Pokémon trouvé.</p>
+            </div>
+        </div>
     </div>
 
 </template>
@@ -47,7 +59,10 @@ import axios from 'axios';
         },
         data () {
             return {
-
+                searchTerm: '',
+                searchResults: [],
+                searchActive: false,
+                detailedPokemonDataLength: '',
             }
         },
         methods: {
@@ -57,10 +72,8 @@ import axios from 'axios';
                     let endpoint = '';
 
                     if (!isNaN(searchTerm)) {
-                        // Si c'est un nombre, recherche par numéro
                         endpoint = `https://pokeapi.co/api/v2/pokemon/${searchTerm}`;
                     } else {
-                        // Sinon, recherche par nom
                         endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=1000'; // Augmentez le nombre si nécessaire
                     }
 
@@ -68,18 +81,55 @@ import axios from 'axios';
                     const pokemonData = response.data;
 
                     if (!isNaN(searchTerm)) {
-                        // Si la recherche est par numéro, affichez les données du Pokémon correspondant
-                        console.log(pokemonData);
+                        const basicInfo = {
+                            id: pokemonData.id,
+                            name: pokemonData.name,
+                        };
+                        this.searchResults = [basicInfo];
+                        this.searchActive = true;
                     } else {
-                        // Si la recherche est par nom, filtrez les résultats
                         const filteredPokemon = pokemonData.results.filter(pokemon => pokemon.name.startsWith(searchTerm));
-                        console.log(filteredPokemon);
+
+                        const detailedPokemonPromises = filteredPokemon.map(async pokemon => {
+                            const detailedResponse = await axios.get(pokemon.url);
+                            return {
+                            id: detailedResponse.data.id,
+                            name: detailedResponse.data.name,
+                            };
+                        });
+
+                        const detailedPokemonData = await Promise.all(detailedPokemonPromises);
+
+                        console.log(detailedPokemonData.length);
+                        this.detailedPokemonDataLength = detailedPokemonData.length;
+                        console.log(this.detailedPokemonDataLength);
+
+
+                        this.searchResults = detailedPokemonData.slice(0, 5);
+
+                        this.searchActive = true;
                     }
                 } catch (error) {
-                    // Gérez les erreurs ici
                     console.error('Erreur lors de la recherche de Pokémon :', error);
+                    this.searchActive = false;
                 }
             },
+
+            handleInput() {
+                if (this.searchTerm === '') {
+                this.resetSearch();
+                }
+            },
+
+            resetSearch() {
+                this.searchResults = [];
+                this.searchActive = false;
+                this.searchTerm = '';
+            },
+
+            capitaliseNamePokemon(name) {
+                return name.charAt(0).toUpperCase() + name.slice(1)
+            }
         },
         computed: {
 
