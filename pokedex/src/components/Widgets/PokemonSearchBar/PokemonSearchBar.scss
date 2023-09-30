@@ -29,6 +29,16 @@
         border-top-left-radius: unset;
         border-top-right-radius: unset;
 
+        .search-bar-item {
+            text-decoration: none;
+            font-weight: 500;
+            color: black;
+
+            &:hover {
+                font-weight: 600;
+            }
+        }
+
         &--active {
             display: flex;
             flex-direction: column;

@@ -26,7 +26,7 @@
                     :to="{ name: 'PokemonInfo', params: { id: pokemon.id } }"
                     v-on:click="reloadPage"
                 >
-                    <p>{{ pokemon.id }} - {{ capitaliseNamePokemon(pokemon.name) }}</p>
+                    #{{ pokemon.id }} - {{ capitaliseNamePokemon(pokemon.name) }}
                 </router-link>
                 <p class="search-bar-more" v-if="detailedPokemonDataLength > 5">And {{ detailedPokemonDataLength - 5 }} more...</p>
             <div class="search-bar-list-empty"  v-if="searchResults.length === 0 && searchActive">
@@ -84,12 +84,23 @@ import axios from 'axios';
             async searchPokemon() {
                 try {
                     const searchTerm = this.searchTerm.toLowerCase();
+                    if (!searchTerm) {
+                        this.resetSearch();
+                        return;
+                    }
+
+                    if (!isNaN(searchTerm) && parseInt(searchTerm) > 1008) {
+                        this.searchResults = []; // Réinitialisez les résultats de la recherche
+                        this.searchActive = true; // Activez le message d'erreur
+                        return;
+                    }
+
                     let endpoint = '';
 
                     if (!isNaN(searchTerm)) {
                         endpoint = `https://pokeapi.co/api/v2/pokemon/${searchTerm}`;
                     } else {
-                        endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=1000'; // Augmentez le nombre si nécessaire
+                        endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=1008';
                     }
 
                     const response = await axios.get(endpoint);
