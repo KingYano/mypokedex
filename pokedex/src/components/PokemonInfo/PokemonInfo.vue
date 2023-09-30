@@ -146,10 +146,10 @@ export default {
           evolutions,
         };
 
-        this.isLoading = false; // Marque le chargement comme terminé
+        this.isLoading = false;
       } catch (error) {
         console.log('Erreur lors de la récupération des données du Pokémon:', error);
-        this.isLoading = false; // Assurez-vous de marquer le chargement comme terminé en cas d'erreur
+        this.isLoading = false;
       }
     },
 
@@ -157,46 +157,46 @@ export default {
       const evolutions = [];
 
       const searchEvolution = (data) => {
-      const evolutionDetails = data.evolution_details[0];
-      const name = data.species.name;
-      const pokemonId = data.species.url.split('/')[6];
-      const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
-      const level = evolutionDetails ? evolutionDetails.min_level : null;
+        const evolutionDetails = data.evolution_details[0];
+        const name = data.species.name;
+        const pokemonId = data.species.url.split('/')[6];
+        const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+        const level = evolutionDetails ? evolutionDetails.min_level : null;
 
-      evolutions.push({
-        name,
-        imageUrl,
-        level,
-      });
-
-      if (data.evolves_to.length > 0) {
-        data.evolves_to.forEach((evolvesTo) => {
-          searchEvolution(evolvesTo);
+        evolutions.push({
+          name,
+          imageUrl,
+          level,
         });
-      }
-    };
 
-    searchEvolution(evolutionData);
-    return evolutions;
-  },
+        if (data.evolves_to.length > 0) {
+          data.evolves_to.forEach((evolvesTo) => {
+            searchEvolution(evolvesTo);
+          });
+        }
+      };
 
-  // Switch entre les différents composants
-  switchPokemonDescription() {
-    this.showPokemonDescription = true;
-    this.showPokemonEvolution = false;
-    this.showPokemonGames = false;
+      searchEvolution(evolutionData);
+      return evolutions;
+    },
+
+    // Switch entre les différents composants
+    switchPokemonDescription() {
+      this.showPokemonDescription = true;
+      this.showPokemonEvolution = false;
+      this.showPokemonGames = false;
+    },
+    switchPokemonEvolution() {
+      this.showPokemonDescription = false;
+      this.showPokemonEvolution = true;
+      this.showPokemonGames = false;
+    },
+    switchPokemonGames() {
+      this.showPokemonDescription = false;
+      this.showPokemonEvolution = false;
+      this.showPokemonGames = true;
+    },
   },
-  switchPokemonEvolution() {
-    this.showPokemonDescription = false;
-    this.showPokemonEvolution = true;
-    this.showPokemonGames = false;
-  },
-  switchPokemonGames() {
-    this.showPokemonDescription = false;
-    this.showPokemonEvolution = false;
-    this.showPokemonGames = true;
-  },
-},
 
   computed: {
 
