@@ -1,6 +1,6 @@
 <template lang="html">
 
-    <div class="widget-search-bar">
+    <div class="widget-search-bar" ref="searchBarRoot">
         <v-text-field
             class="search-bar-component"
             :class="{ 'search-bar-component--active': searchActive }"
@@ -15,7 +15,7 @@
             hide-details
             @keyup.enter="searchPokemon"
             @click:clear="resetSearch"
-            @input="handleInput"
+            @input="resetInput"
             v-model="searchTerm"
         ></v-text-field>
         <div class="search-bar-list" :class="{ 'search-bar-list--active': searchActive }">
@@ -64,6 +64,15 @@ import axios from 'axios';
                 searchActive: false,
                 detailedPokemonDataLength: '',
             }
+        },
+         mounted() {
+            // Ajoutez un écouteur d'événements click pour gérer les clics en dehors du composant
+            document.addEventListener('click', this.isOutsideClick);
+        },
+        /* eslint-disable */
+        beforeDestroy() {
+            // Supprimez l'écouteur d'événements click lors de la destruction du composant
+            document.removeEventListener('click', this.isOutsideClick);
         },
         methods: {
             async searchPokemon() {
@@ -115,7 +124,17 @@ import axios from 'axios';
                 }
             },
 
-            handleInput() {
+            isOutsideClick(event) {
+                // Vérifiez si l'élément cliqué est en dehors du composant
+                if (
+                    this.$refs.searchBarRoot &&
+                    !this.$refs.searchBarRoot.contains(event.target)
+                ) {
+                    this.resetSearch(); // Fermez la liste de résultats
+                }
+            },
+
+            resetInput() {
                 if (this.searchTerm === '') {
                 this.resetSearch();
                 }
