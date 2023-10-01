@@ -30,7 +30,7 @@
                 </router-link>
                 <p class="search-bar-more" v-if="detailedPokemonDataLength > 5">And {{ detailedPokemonDataLength - 5 }} more...</p>
             <div class="search-bar-list-empty"  v-if="searchResults.length === 0 && searchActive">
-                <p>Aucun Pokémon trouvé.</p>
+                <p>No Pokémon found.</p>
             </div>
         </div>
     </div>
@@ -126,10 +126,7 @@ import axios from 'axios';
 
                         const detailedPokemonData = await Promise.all(detailedPokemonPromises);
 
-                        console.log(detailedPokemonData.length);
                         this.detailedPokemonDataLength = detailedPokemonData.length;
-                        console.log(this.detailedPokemonDataLength);
-
 
                         this.searchResults = detailedPokemonData.slice(0, 5);
 
