@@ -1,12 +1,12 @@
-# Title: Pokedex with Vue2 and Sass using the PokeAPI ("Work in progress")
+# Title: Pokedex with Vue2 and Sass using the PokeAPI
 
 # Description:
 This project consists of creating a Pokedex using the PokeAPI to retrieve information about Pokemon. The Pokedex will be developed with Vue.js and styled with Sass. The design of the Pokedex was created by myself on Figma, and I have taken care to create an intuitive and enjoyable user interface for Pokemon fans.
 
 # Features:
-- Display of the complete list of Pokemon with their name, image, type, and identification number ("Work in progress").
-- Search for Pokemon by name or identification number ("Work in progress").
-- Display of details for a selected Pokemon, such as statistics, abilities, and evolutions ("Coming soon").
+- Display of the complete list of Pokemon with their name, image, type, and identification number.
+- Search for Pokemon by name or identification number.
+- Display of details for a selected Pokemon, such as statistics, abilities, and evolutions.
 
 
 # Technologies Used:
